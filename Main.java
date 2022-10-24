@@ -1,4 +1,3 @@
-
 import java.util.*;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -62,27 +61,20 @@ public class Main {
 		}
 	}
 
-	static boolean isSort(int[] array) {
-		boolean b = true;
-		for (int i = 1; i < array.length; i++)
-			b &= array[i] >= array[i - 1];
-		return b;
-	}
-
-	static int[] array = new int[(int) 10];
+	static int[] array = new int[(int) 100];
 
 	public static void parallelAssignment() {
 		for (int i = 0; i < array.length; i++)
 			array[i] = new Random().nextInt(1000);
 	}
-
+	
 	public static void main(String[] args) throws Exception {
 		parallelAssignment();
 		System.out.println("Array before sort: " + Arrays.toString(array));
 		long curTime = System.currentTimeMillis();
 		final ForkJoinPool forkJoinPool = new ForkJoinPool(Runtime.getRuntime().availableProcessors() - 1);
 		forkJoinPool.invoke(new ParallelMergeSort(array, 0, array.length - 1));
-		System.out.println("Parallel merge sort execution time: " + (System.currentTimeMillis() - curTime));
+		System.out.println("Parallel merge sort execution time: " + (System.currentTimeMillis() - curTime)+" Milliseconds");
 		System.out.println("Array after sort: " + Arrays.toString(array));
 		int cpus = Runtime.getRuntime().availableProcessors();
 		ExecutorService service = Executors.newFixedThreadPool(cpus);
